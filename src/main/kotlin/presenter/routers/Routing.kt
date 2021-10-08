@@ -7,7 +7,7 @@ import io.ktor.response.*
 fun Application.configureRouting() {
     // Starting point for a Ktor app:
     routing {
-        get("/aaaaaaaaaa") {
+        get("/aoooooooooo") {
             call.respondText("Hello World!!")
         }
 
