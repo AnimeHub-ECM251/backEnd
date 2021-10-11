@@ -1,10 +1,12 @@
 package repositories.mysql
 
+import ch.qos.logback.core.db.dialect.MySQLDialect
+import repositories.IRepo
 import repositories.errors.DATABASE_CONNECTION_FAILED
 import util.DBTablePrinter
 import java.sql.*
 
-class RepoMysql (dbName: String = "animeHubDB"){
+class RepoMysql (dbName: String = "animeHubDB") : IRepo{
     private val connection: Connection
     private val SQLStatement: Statement
     private val DBName: String
@@ -26,6 +28,7 @@ class RepoMysql (dbName: String = "animeHubDB"){
             return c
         }
         catch (e: SQLException){
+            e.printStackTrace()
             throw DATABASE_CONNECTION_FAILED()
         }
     }
@@ -46,24 +49,29 @@ class RepoMysql (dbName: String = "animeHubDB"){
     }
 
 
-    fun read(table: String, where: String="TRUE"){
+    override fun read(table: String, where: String){
         var result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE ${where}")
         DBTablePrinter.printResultSet(result)
     }
 
-    fun create(table: String, data: HashMap<String, String>){
+    override fun create(table: String, data: HashMap<String, String>){
+        data.remove("id")
         executeStatement("INSERT INTO ${this.DBName}.${table} (${data.keys.joinToString { it -> it }}) values (${data.values.joinToString { it -> "\'${it}\'" }});")
-
 
     }
 
-    fun update(table: String, data: HashMap<String, String>){
+    override fun update(table: String, data: HashMap<String, String>){
         val id = data.remove("id")
         executeStatement("UPDATE ${this.DBName}.${table} SET ${data.keys.joinToString { it -> "$it = \'${data[it]}\'" }} WHERE id = $id")
     }
 
-    fun delete(table: String, id: Int){
+    override fun delete(table: String, id: Int){
         executeStatement("DELETE FROM ${this.DBName}.${table} WHERE id = $id")
     }
 
+}
+
+fun main(){
+    val repo = RepoMysql()
+    repo.read("Anime")
 }
