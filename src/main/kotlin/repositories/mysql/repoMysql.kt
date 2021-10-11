@@ -9,13 +9,11 @@ class RepoMysql (dbName: String = "animeHubDB"){
     private val SQLStatement: Statement
     private val DBName: String
 
-
     init {
         this.connection = createConnection()
         this.SQLStatement = createStatement()
         this.DBName = dbName
     }
-
 
     private fun createConnection(): Connection {
         try {
@@ -67,6 +65,5 @@ class RepoMysql (dbName: String = "animeHubDB"){
     fun delete(table: String, id: Int){
         executeStatement("DELETE FROM ${this.DBName}.${table} WHERE id = $id")
     }
-
 
 }
