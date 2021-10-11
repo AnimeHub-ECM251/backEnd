@@ -54,21 +54,18 @@ class RepoMysql (dbName: String = "animeHubDB"){
     }
 
     fun create(table: String, data: HashMap<String, String>){
-        var query = "INSERT INTO ${this.DBName}.${table} (${data.keys.joinToString { it -> "${it}" }}) values (${data.values.joinToString {it -> "\'${it}\'" }});"
-        executeStatement(query)
+        executeStatement("INSERT INTO ${this.DBName}.${table} (${data.keys.joinToString { it -> it }}) values (${data.values.joinToString { it -> "\'${it}\'" }});")
 
 
     }
 
     fun update(table: String, data: HashMap<String, String>){
         val id = data.remove("id")
-        var query = "UPDATE ${this.DBName}.${table} SET ${data.keys.joinToString { it -> "${it} = \'${data[it]}\'" }} WHERE id = ${id}"
-        executeStatement(query)
+        executeStatement("UPDATE ${this.DBName}.${table} SET ${data.keys.joinToString { it -> "$it = \'${data[it]}\'" }} WHERE id = $id")
     }
 
     fun delete(table: String, id: Int){
-        var query = "DELETE FROM ${this.DBName}.${table} WHERE id = ${id}"
-        executeStatement(query)
+        executeStatement("DELETE FROM ${this.DBName}.${table} WHERE id = $id")
     }
 
 
