@@ -12,4 +12,6 @@ interface IRepo {
     fun update(table: String, data: HashMap<String, String>)
 
     fun delete(table: String, id: Int)
+
+    fun getId(table: String, column: String, value: String): Int
 }

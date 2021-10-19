@@ -52,6 +52,7 @@ class RepoMysql (dbName: String = "animeHubDB") : IRepo{
     override fun read(table: String, where: String){
         var result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE ${where}")
         DBTablePrinter.printResultSet(result)
+
     }
 
     override fun create(table: String, data: HashMap<String, String>){
@@ -69,9 +70,15 @@ class RepoMysql (dbName: String = "animeHubDB") : IRepo{
         executeStatement("DELETE FROM ${this.DBName}.${table} WHERE id = $id")
     }
 
+    override fun getId(table: String, column: String, value: String): Int {
+        val id: ResultSet = this.SQLStatement.executeQuery("SELECT id FROM ${this.DBName}.${table} WHERE ${column} = '${value}'")
+        id.next()
+        return id.getObject("id") as Int
+    }
+
 }
 
 fun main(){
     val repo = RepoMysql()
-    repo.read("Anime")
+    repo.getId("Anime", "title", "Konosuba5")
 }

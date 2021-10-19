@@ -21,13 +21,22 @@ class CtrlAnime (rep: IRepo) {
         ucAnime = UcAnime(rep)
     }
 
-    fun createAnime(body: String) {
-        val gson = Gson()
+    fun createAnime(body: String): String {
         var map: HashMap<String, String> = HashMap()
         map = Gson().fromJson(body, map.javaClass)
         val a : Anime = Anime.fromHashMap(map)
         ucAnime.createAnime(a)
+        return "Anime ${a.title} was created"
+    }
 
+    fun updateAnime(body: String): String {
+        var map: HashMap<String, String> = HashMap()
+        map = Gson().fromJson(body, map.javaClass)
+        val a : Anime = Anime.fromHashMap(map)
+        val id: Int = this.repo.getId("Anime", "title", a.title)
+        a.id = id
+        ucAnime.updateAnime(a)
+        return "Anime ${a.title} was updated"
     }
 }
 

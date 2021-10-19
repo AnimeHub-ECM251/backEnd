@@ -12,7 +12,10 @@ class UcAnime (rep: IRepo) {
 
     fun createAnime(anime: Anime){
         this.repo.create("Anime", anime.toHashMap())
+    }
 
+    fun updateAnime(anime: Anime){
+        this.repo.update("Anime", anime.toHashMap())
     }
 
 

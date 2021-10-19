@@ -7,10 +7,11 @@ import io.ktor.application.*
 import io.ktor.request.*
 import io.ktor.response.*
 import models.Anime
+import repositories.IRepo
 import repositories.mysql.RepoMysql
 import usecases.UcAnime
 
-fun Application.configureRouting() {
+fun Application.configureRouting(rep: IRepo) {
     // Starting point for a Ktor app:
     routing {
         get("/") {
@@ -23,10 +24,14 @@ fun Application.configureRouting() {
 
         post("/criar-anime") {
             val request = call.receive<String>()
-            val rep = RepoMysql()
             val ctrl = CtrlAnime(rep)
-            ctrl.createAnime(request)
+            call.respondText(ctrl.createAnime(request))
+        }
 
+        post("/atualizar-anime") {
+            val request = call.receive<String>()
+            val ctrl = CtrlAnime(rep)
+            call.respondText(ctrl.updateAnime(request))
         }
     }
 

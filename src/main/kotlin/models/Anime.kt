@@ -10,7 +10,7 @@ import kotlin.reflect.full.declaredMemberProperties
 
 data class Anime(
     var title: String,
-    val id: Int?,
+    var id: Int?,
     var image: String,
     var synopsis: String,
     var episodes: Int,
