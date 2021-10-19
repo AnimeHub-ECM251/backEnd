@@ -18,5 +18,15 @@ class UcAnime (rep: IRepo) {
         this.repo.update("Anime", anime.toHashMap())
     }
 
+    fun deleteAnime(id: Int) {
+        this.repo.delete("Anime", id)
+    }
+
+    fun getAnime(id: String?): Anime {
+        val map = this.repo.getById("Anime", id)
+        val anime = Anime.fromHashMap(map as HashMap<String, String>)
+        return anime
+    }
+
 
 }

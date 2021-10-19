@@ -14,4 +14,6 @@ interface IRepo {
     fun delete(table: String, id: Int)
 
     fun getId(table: String, column: String, value: String): Int
+
+    fun getById(table: String, id: String?): Map<String, String>?
 }

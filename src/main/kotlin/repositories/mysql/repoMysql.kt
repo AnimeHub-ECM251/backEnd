@@ -1,10 +1,10 @@
 package repositories.mysql
 
-import ch.qos.logback.core.db.dialect.MySQLDialect
 import repositories.IRepo
 import repositories.errors.DATABASE_CONNECTION_FAILED
 import util.DBTablePrinter
 import java.sql.*
+
 
 class RepoMysql (dbName: String = "animeHubDB") : IRepo{
     private val connection: Connection
@@ -33,6 +33,24 @@ class RepoMysql (dbName: String = "animeHubDB") : IRepo{
         }
     }
 
+    /**
+     * Fonte: https://gist.github.com/cworks/4175942
+     */
+    @Throws(SQLException::class)
+    private fun resultSetToList(rs: ResultSet): MutableList<Map<String, String>> {
+        val md = rs.metaData
+        val columns = md.columnCount
+        val rows: MutableList<Map<String, String>> = ArrayList()
+        while (rs.next()) {
+            val row: MutableMap<String, String> = HashMap(columns)
+            for (i in 1..columns) {
+                row[md.getColumnName(i)] = rs.getString(i)
+            }
+            rows.add(row)
+        }
+        return rows
+    }
+
     private fun createStatement(): Statement {
         return this.connection!!.createStatement()
     }
@@ -52,7 +70,6 @@ class RepoMysql (dbName: String = "animeHubDB") : IRepo{
     override fun read(table: String, where: String){
         var result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE ${where}")
         DBTablePrinter.printResultSet(result)
-
     }
 
     override fun create(table: String, data: HashMap<String, String>){
@@ -76,9 +93,16 @@ class RepoMysql (dbName: String = "animeHubDB") : IRepo{
         return id.getObject("id") as Int
     }
 
+    override fun getById(table: String, id: String?): Map<String, String>? {
+        val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE id = '${id}'")
+        val map = resultSetToList(result)
+        return map[0]
+    }
+
+
 }
 
 fun main(){
     val repo = RepoMysql()
-    repo.getId("Anime", "title", "Konosuba5")
+//    repo.getById("Anime", 3)
 }

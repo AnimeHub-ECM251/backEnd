@@ -3,8 +3,6 @@ package Controllers
 
 
 import com.google.gson.Gson
-import com.google.gson.JsonObject
-import io.netty.handler.codec.json.JsonObjectDecoder
 import models.Anime
 import repositories.IRepo
 import repositories.mysql.RepoMysql
@@ -38,16 +36,26 @@ class CtrlAnime (rep: IRepo) {
         ucAnime.updateAnime(a)
         return "Anime ${a.title} was updated"
     }
+
+    fun deleteAnime(id: Int): String {
+        ucAnime.deleteAnime(id)
+        return "Anime #${id} was deleted"
+    }
+
+    fun getAnimeById(id: String?): Anime {
+        return ucAnime.getAnime(id)
+    }
 }
 
 fun main(){
     val repo = RepoMysql()
     val ctrl = CtrlAnime(repo)
-    ctrl.createAnime("""{        
-        "title": "KonoSuba2",
-        "image": "image",
-        "synopsis": "syn",
-        "episodes": "30",
-        "launchDate": 2021-10-10,
-        "studio": "stud"}""")
+//    ctrl.createAnime("""{
+//        "title": "KonoSuba2",
+//        "image": "image",
+//        "synopsis": "syn",
+//        "episodes": "30",
+//        "launchDate": 2021-10-10,
+//        "studio": "stud"}""")
+    ctrl.deleteAnime(13)
 }
