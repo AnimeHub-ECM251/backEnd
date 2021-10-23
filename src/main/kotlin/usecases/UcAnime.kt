@@ -28,5 +28,16 @@ class UcAnime (rep: IRepo) {
         return anime
     }
 
+    fun getAllAnimes(): List<Anime> {
+        val list = this.repo.getAll("Anime")
+        val animeList = ArrayList<Anime>()
+        for (map in list) {
+            animeList.add(Anime.fromHashMap(map as HashMap<String, String>))
+        }
+        return animeList
+
+
+    }
+
 
 }

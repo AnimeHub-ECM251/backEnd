@@ -45,6 +45,12 @@ class CtrlAnime (rep: IRepo) {
     fun getAnimeById(id: String?): Anime {
         return ucAnime.getAnime(id)
     }
+
+    fun getAllAnimes(): List<Anime> {
+        return ucAnime.getAllAnimes()
+
+
+    }
 }
 
 fun main(){

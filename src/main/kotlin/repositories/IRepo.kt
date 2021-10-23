@@ -16,4 +16,6 @@ interface IRepo {
     fun getId(table: String, column: String, value: String): Int
 
     fun getById(table: String, id: String?): Map<String, String>?
+
+    fun getAll(table: String): List<Any>
 }

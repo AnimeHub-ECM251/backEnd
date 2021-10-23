@@ -1,5 +1,6 @@
 package repositories.mysql
 
+import models.Anime
 import repositories.IRepo
 import repositories.errors.DATABASE_CONNECTION_FAILED
 import util.DBTablePrinter
@@ -99,10 +100,18 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
         return map[0]
     }
 
+    override fun getAll(table: String): List<Any> {
+        val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table}")
+        val map = resultSetToList(result)
+        return map
+    }
+
+
 
 }
 
 fun main(){
     val repo = RepoMysql()
-//    repo.getById("Anime", 3)
+    println(repo.getAll("Anime"))
+    repo.read("Anime")
 }
