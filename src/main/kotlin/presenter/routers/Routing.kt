@@ -1,6 +1,6 @@
 package presenter.routers
 
-import Controllers.CtrlAnime
+import controllers.CtrlAnime
 import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.request.*
