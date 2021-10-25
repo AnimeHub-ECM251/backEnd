@@ -1,6 +1,7 @@
 package presenter.routers
 
 import controllers.CtrlAnime
+import controllers.CtrlComment
 import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.request.*
@@ -40,6 +41,12 @@ fun Application.configureRouting(rep: IRepo) {
             val ctrl = CtrlAnime(rep)
             println(request.toInt())
             call.respondText(ctrl.deleteAnime(request.toInt()))
+        }
+
+        post("/criar-comment") {
+            val request = call.receive<String>()
+            val ctrl = CtrlComment(rep)
+            call.respondText(ctrl.create(request))
         }
     }
 

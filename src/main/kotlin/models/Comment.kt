@@ -4,7 +4,7 @@ import models.errors.INTANCE_PROPERTIES_DONT_MATCH
 
 
 data class Comment(
-    val id: Int,
+    val id: Int?,
     var text: String,
     var likes: Int,
     var deslikes: Int,
@@ -23,13 +23,13 @@ data class Comment(
     }
 
     companion object {
-        private val properties : List<String> = listOf()
+        private val properties : List<String> = listOf("text", "idUser", "idReview")
 
         fun fromHashMap(map: HashMap<String, String>) : Comment{
             val mapKeys = map.keys.toList()
             if (mapKeys.containsAll(Comment.properties)) {
-                val comment = Comment(map["id"]!!.toInt(), map["text"]!!, map["likes"]!!.toInt(),
-                    map["deslikes"]!!.toInt(), map["idUser"]!!.toInt(), map["idReview"]!!.toInt())
+                val comment = Comment(map["id"]?.toInt(), map["text"]!!, (map["likes"]?.toInt() ?: 0),
+                    (map["deslikes"]?.toInt() ?: 0), map["idUser"]!!.toInt(), map["idReview"]!!.toInt())
                 return comment
 
             } else throw INTANCE_PROPERTIES_DONT_MATCH()

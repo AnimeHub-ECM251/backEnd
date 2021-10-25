@@ -6,7 +6,7 @@ import util.DBTablePrinter
 import java.sql.*
 
 
-class RepoMysql (dbName: String = "animeHubDB") : IRepo{
+class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     private val connection: Connection
     private val SQLStatement: Statement
     private val DBName: String
@@ -22,7 +22,7 @@ class RepoMysql (dbName: String = "animeHubDB") : IRepo{
             val c  = DriverManager.getConnection(
                 "jdbc:mysql://127.0.0.1:3306",
                 "root",
-                "password"
+                "pinto"
             )
             println("Connection created")
             return c
