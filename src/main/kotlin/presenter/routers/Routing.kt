@@ -48,6 +48,11 @@ fun Application.configureRouting(rep: IRepo) {
             val ctrl = CtrlComment(rep)
             call.respondText(ctrl.create(request))
         }
+        post("/atualizar-comment") {
+            val request = call.receive<String>()
+            val ctrl = CtrlComment(rep)
+            call.respondText(ctrl.update(request))
+        }
     }
 
 }

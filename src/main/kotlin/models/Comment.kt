@@ -4,7 +4,7 @@ import models.errors.INTANCE_PROPERTIES_DONT_MATCH
 
 
 data class Comment(
-    val id: Int?,
+    var id: Int?,
     var text: String,
     var likes: Int,
     var deslikes: Int,
