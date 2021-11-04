@@ -1,6 +1,7 @@
 package presenter.routers
 
-import Controllers.CtrlAnime
+import controllers.CtrlAnime
+import controllers.CtrlComment
 import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.request.*
@@ -58,9 +59,6 @@ fun Application.configureRouting(rep: IRepo) {
             val ctrl = CtrlComment(rep)
             call.respondText(ctrl.update(request))
         }
-    }
-
-}
     }
 
 }
