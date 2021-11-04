@@ -21,7 +21,7 @@ fun Application.configureRouting(rep: IRepo) {
 
         get("/anime/{id}") {
             val ctrl = CtrlAnime(rep)
-            call.respondText("Anime \n${ctrl.getAnimeById(call.parameters["id"])}")
+            call.respondText("${ctrl.getAnimeById(call.parameters["id"])}")
         }
 
         post("/criar-anime") {
@@ -49,16 +49,22 @@ fun Application.configureRouting(rep: IRepo) {
 
         }
 
-        post("/criar-comment") {
-            val request = call.receive<String>()
+        get("/comentarios/{id}") {
             val ctrl = CtrlComment(rep)
-            call.respondText(ctrl.create(request))
+            val id = Integer.valueOf(call.parameters["id"])
+            call.respondText(ctrl.getAllCommentsByReview(id))
         }
-        post("/atualizar-comment") {
-            val request = call.receive<String>()
-            val ctrl = CtrlComment(rep)
-            call.respondText(ctrl.update(request))
-        }
+
+//        post("/criar-comment") {
+//            val request = call.receive<String>()
+//            val ctrl = CtrlComment(rep)
+//            call.respondText(ctrl.create(request))
+//        }
+//        post("/atualizar-comment") {
+//            val request = call.receive<String>()
+//            val ctrl = CtrlComment(rep)
+//            call.respondText(ctrl.update(request))
+//        }
     }
 
 }

@@ -30,4 +30,11 @@ class CtrlComment (rep:IRepo){
         ucComment.update(comment)
         return "Comment ${comment.id} was updated"
     }
+
+    fun getAllCommentsByReview(id: Int?): String {
+        val comments = ucComment.getAllCommentsByReview(id)
+        return Gson().toJson(comments)
+    }
+
 }
+

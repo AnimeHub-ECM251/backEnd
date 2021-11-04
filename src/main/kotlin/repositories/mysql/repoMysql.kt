@@ -7,7 +7,7 @@ import util.DBTablePrinter
 import java.sql.*
 
 
-class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
+class RepoMysql (dbName: String = "animeHubDB") : IRepo{
     private val connection: Connection
     private val SQLStatement: Statement
     private val DBName: String
@@ -23,7 +23,7 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
             val c  = DriverManager.getConnection(
                 "jdbc:mysql://127.0.0.1:3306",
                 "root",
-                "pinto"
+                "password"
             )
             println("Connection created")
             return c
@@ -100,8 +100,8 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
         return map[0]
     }
 
-    override fun getAll(table: String): List<Any> {
-        val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table}")
+    override fun getAll(table: String, where: String): List<Any> {
+        val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE ${where}")
         val map = resultSetToList(result)
         return map
     }
