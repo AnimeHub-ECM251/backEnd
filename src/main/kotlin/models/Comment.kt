@@ -1,5 +1,6 @@
 package models
 
+import com.google.gson.Gson
 import models.errors.INTANCE_PROPERTIES_DONT_MATCH
 
 
@@ -36,4 +37,14 @@ data class Comment(
 
         }
     }
+
+    override fun toString(): String {
+        // Gets a hashmap representation of the object
+        val map = this.toHashMap()
+        // converts the hashmap to json
+        val json = Gson().toJson(map)
+        // returns the json
+        return json
+    }
+
 }

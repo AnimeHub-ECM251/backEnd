@@ -4,6 +4,7 @@ package models
 
 
 
+import com.google.gson.Gson
 import models.errors.INTANCE_PROPERTIES_DONT_MATCH
 import java.time.LocalDate
 import kotlin.reflect.full.declaredMemberProperties
@@ -42,6 +43,20 @@ data class Anime(
             } else throw INTANCE_PROPERTIES_DONT_MATCH()
 
         }
+    }
+
+    override fun toString(): String {
+        // Gets a hashmap representation of the object
+        val map = this.toHashMap()
+        // converts the hashmap to json
+        val json = Gson().toJson(map)
+        // returns the json
+        return json
+
+
+
+
+
     }
 
 }
