@@ -8,7 +8,15 @@ import io.ktor.request.*
 import io.ktor.response.*
 import repositories.IRepo
 
+
+
+
+
+
 fun Application.configureRouting(rep: IRepo) {
+    var controladorAnime = CtrlAnime(rep)
+    var controladorComment = CtrlComment(rep)
+
     // Starting point for a Ktor app:
     routing {
         get("/") {
@@ -26,33 +34,31 @@ fun Application.configureRouting(rep: IRepo) {
 
         post("/criar-anime") {
             val request = call.receive<String>()
-            val ctrl = CtrlAnime(rep)
-            call.respondText(ctrl.createAnime(request))
+            call.respondText(controladorAnime.createAnime(request))
         }
 
         post("/atualizar-anime") {
             val request = call.receive<String>()
-            val ctrl = CtrlAnime(rep)
-            call.respondText(ctrl.updateAnime(request))
+            call.respondText(controladorAnime.updateAnime(request))
         }
 
         post("/deletar-anime") {
             val request = call.receive<String>()
-            val ctrl = CtrlAnime(rep)
             println(request.toInt())
-            call.respondText(ctrl.deleteAnime(request.toInt()))
+            call.respondText(controladorAnime.deleteAnime(request.toInt()))
         }
 
-        get("/todos-animes"){
-            val ctrl = CtrlAnime(rep)
-            call.respondText(ctrl.getAllAnimes().toString())
+        get("/todos-animes") {
+            call.respondText(controladorAnime.getAllAnimes().toString())
+        }
 
+        get("todos-animes/id"){
+            call.respondText(controladorAnime.getAllAnimesIds().toString())
         }
 
         get("/comentarios/{id}") {
-            val ctrl = CtrlComment(rep)
             val id = Integer.valueOf(call.parameters["id"])
-            call.respondText(ctrl.getAllCommentsByReview(id))
+            call.respondText(controladorComment.getAllCommentsByReview(id))
         }
 
 //        post("/criar-comment") {

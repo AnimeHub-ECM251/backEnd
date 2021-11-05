@@ -48,9 +48,17 @@ class CtrlAnime (rep: IRepo) {
 
     fun getAllAnimes(): List<Anime> {
         return ucAnime.getAllAnimes()
-
-
     }
+
+    fun getAllAnimesIds(): List<Int> {
+        val animesList = getAllAnimes()
+        val animesIds = ArrayList<Int>()
+        for (anime in animesList) {
+            animesIds.add(anime.id!!)
+        }
+        return animesIds
+    }
+
 }
 
 fun main(){
@@ -63,5 +71,6 @@ fun main(){
 //        "episodes": "30",
 //        "launchDate": 2021-10-10,
 //        "studio": "stud"}""")
-    ctrl.deleteAnime(13)
+//    ctrl.deleteAnime(13)
+    println(ctrl.getAllAnimesIds())
 }

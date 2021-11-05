@@ -8,7 +8,7 @@ import java.sql.*
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 
-class RepoMysql (dbName: String = "animeHubDB") : IRepo{
+class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     private val connection: Connection
     private val SQLStatement: Statement
     private val DBName: String
