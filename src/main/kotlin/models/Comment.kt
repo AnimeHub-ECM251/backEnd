@@ -10,7 +10,7 @@ data class Comment(
     var likes: Int,
     var deslikes: Int,
     val idUser: Int,
-    val idReview: Int
+    val idAnime: Int
         ): ITable {
     override fun toHashMap(): HashMap<String, String> {
         return hashMapOf(
@@ -19,18 +19,18 @@ data class Comment(
             "likes" to likes.toString(),
             "deslikes" to deslikes.toString(),
             "idUser" to idUser.toString(),
-            "idReview" to idReview.toString()
+            "idAnime" to idAnime.toString()
         )
     }
 
     companion object {
-        private val properties : List<String> = listOf("text", "idUser", "idReview")
+        private val properties : List<String> = listOf("text", "idUser", "idAnime")
 
         fun fromHashMap(map: HashMap<String, String>) : Comment{
             val mapKeys = map.keys.toList()
             if (mapKeys.containsAll(Comment.properties)) {
                 val comment = Comment(map["id"]?.toInt(), map["text"]!!, (map["likes"]?.toInt() ?: 0),
-                    (map["deslikes"]?.toInt() ?: 0), map["idUser"]!!.toInt(), map["idReview"]!!.toInt())
+                    (map["deslikes"]?.toInt() ?: 0), map["idUser"]!!.toInt(), map["idAnime"]!!.toInt())
                 return comment
 
             } else throw INTANCE_PROPERTIES_DONT_MATCH()

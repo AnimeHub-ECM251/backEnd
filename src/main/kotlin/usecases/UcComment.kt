@@ -1,7 +1,5 @@
 package usecases
 
-import com.google.gson.JsonElement
-import models.Anime
 import models.Comment
 import repositories.IRepo
 
@@ -30,13 +28,13 @@ class UcComment (rep: IRepo){
         return comment
     }
 
-    fun getAllCommentsByReview(idReview: Int?): List<Comment> {
-        val list = this.repo.getAll("Comment","idReview = '${idReview}'")
+    fun getAllCommentsByReview(idAnime: Int?): List<Comment> {
+        val list = this.repo.getAll("Comment","idAnime = '${idAnime}'")
         val comments = ArrayList<Comment>()
         for (i in list.indices) {
             val map = list[i] as HashMap<String, String>
             val comment = Comment.fromHashMap(map)
-            if (comment.idReview == idReview) {
+            if (comment.idAnime == idAnime) {
                 comments.add(comment)
             }
         }

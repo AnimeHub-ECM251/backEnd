@@ -16,7 +16,9 @@ data class Anime(
     var synopsis: String,
     var episodes: Int,
     var launchDate: LocalDate,
-    var studio: String) : ITable {
+    var studio: String,
+    var publicRating: Double?,
+    var websiteRating: Double?) : ITable {
 
     override fun toHashMap(): HashMap<String, String> {
         return hashMapOf(
@@ -26,7 +28,9 @@ data class Anime(
             "synopsis" to synopsis,
             "episodes" to episodes.toString(),
             "launchDate" to launchDate.toString(),
-            "studio" to studio
+            "studio" to studio,
+            "publicRating" to publicRating.toString(),
+            "websiteRating" to websiteRating.toString(),
         )
     }
 
@@ -37,7 +41,8 @@ data class Anime(
             val a = map.keys.toList()
             if (a.containsAll(Anime.properties)) {
                 val a = Anime(map["title"]!!, map["id"]?.toInt(), map["image"]!!,
-                    map["synopsis"]!!, map["episodes"]!!.toInt(), LocalDate.parse(map["launchDate"]!!), map["studio"]!!)
+                    map["synopsis"]!!, map["episodes"]!!.toInt(), LocalDate.parse(map["launchDate"]!!),
+                    map["studio"]!!, map["publicRating"]?.toDouble(), map["websiteRating"]?.toDouble())
                 return a
 
             } else throw INTANCE_PROPERTIES_DONT_MATCH()
@@ -52,11 +57,6 @@ data class Anime(
         val json = Gson().toJson(map)
         // returns the json
         return json
-
-
-
-
-
     }
 
 }
