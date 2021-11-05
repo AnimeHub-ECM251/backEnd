@@ -28,8 +28,7 @@ fun Application.configureRouting(rep: IRepo) {
         }
 
         get("/anime/{id}") {
-            val ctrl = CtrlAnime(rep)
-            call.respondText("${ctrl.getAnimeById(call.parameters["id"])}")
+            call.respondText("${controladorAnime.getAnimeById(call.parameters["id"])}")
         }
 
         post("/criar-anime") {
