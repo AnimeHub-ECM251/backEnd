@@ -31,7 +31,7 @@ class CtrlComment (rep:IRepo){
         return "Comment ${comment.id} was updated"
     }
 
-    fun getAllCommentsByReview(id: Int?): String {
+    fun getAllCommentsByReview(id: Int?): String { //TODO retornar o nome do usuarios
         val comments = ucComment.getAllCommentsByReview(id)
         return Gson().toJson(comments)
     }

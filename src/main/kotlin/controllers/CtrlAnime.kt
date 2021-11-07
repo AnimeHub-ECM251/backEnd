@@ -59,6 +59,23 @@ class CtrlAnime (rep: IRepo) {
         return animesIds
     }
 
+    fun getAnimesPage(page: Int?): String {
+        val animesIds = getAllAnimesIds()
+        val pageSize = 5
+        val startIndex = pageSize * (page!! - 1)
+        val endIndex = startIndex + pageSize
+        val animesPageId = ArrayList<Int>()
+
+        for (id in startIndex until endIndex) {
+            if (animesIds.indices.contains(id)) {
+                animesPageId.add(animesIds[id])
+            } else {
+                break
+            }
+        }
+        return animesPageId.toString()
+    }
+
 }
 
 fun main(){

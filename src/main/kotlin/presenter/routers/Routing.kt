@@ -4,6 +4,7 @@ import controllers.CtrlAnime
 import controllers.CtrlComment
 import io.ktor.routing.*
 import io.ktor.application.*
+import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import repositories.IRepo
@@ -28,7 +29,11 @@ fun Application.configureRouting(rep: IRepo) {
         }
 
         get("/anime/{id}") {
-            call.respondText("${controladorAnime.getAnimeById(call.parameters["id"])}")
+            call.respondText("${controladorAnime.getAnimeById(call.parameters["id"])}", ContentType.Application.Json)
+        }
+
+        options("/anime/{id}") {
+            call.respondText("${controladorAnime.getAnimeById(call.parameters["id"])}", ContentType.Application.Json)
         }
 
         post("/criar-anime") {
@@ -51,8 +56,9 @@ fun Application.configureRouting(rep: IRepo) {
             call.respondText(controladorAnime.getAllAnimes().toString())
         }
 
-        get("todos-animes/id"){
-            call.respondText(controladorAnime.getAllAnimesIds().toString())
+        get("todos-animes/id/{page}"){
+            val page : Int? = call.parameters["page"]?.toInt()
+            call.respondText(controladorAnime.getAnimesPage(page).toString())
         }
 
         get("/comentarios/{id}") {
@@ -60,16 +66,11 @@ fun Application.configureRouting(rep: IRepo) {
             call.respondText(controladorComment.getAllCommentsByReview(id))
         }
 
-//        post("/criar-comment") {
-//            val request = call.receive<String>()
-//            val ctrl = CtrlComment(rep)
-//            call.respondText(ctrl.create(request))
-//        }
-//        post("/atualizar-comment") {
-//            val request = call.receive<String>()
-//            val ctrl = CtrlComment(rep)
-//            call.respondText(ctrl.update(request))
-//        }
+        post("/criar-comentario") {
+            val request = call.receive<String>()
+            call.respondText(controladorComment.create(request))
+        }
+
     }
 
 }
