@@ -35,8 +35,6 @@ class UcAnime (rep: IRepo) {
             animeList.add(Anime.fromHashMap(map as HashMap<String, String>))
         }
         return animeList
-
-
     }
 
 

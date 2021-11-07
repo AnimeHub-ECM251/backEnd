@@ -97,6 +97,7 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
 
     override fun getById(table: String, id: String?): Map<String, String>? {
         val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE id = '${id}'")
+        println("SELECT * FROM ${this.DBName}.${table} WHERE id = '${id}'")
         val map = resultSetToList(result)
         return map[0]
     }

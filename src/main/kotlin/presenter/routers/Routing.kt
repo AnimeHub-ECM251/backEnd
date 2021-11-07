@@ -2,6 +2,7 @@ package presenter.routers
 
 import controllers.CtrlAnime
 import controllers.CtrlComment
+import controllers.CtrlUser
 import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.http.*
@@ -17,6 +18,7 @@ import repositories.IRepo
 fun Application.configureRouting(rep: IRepo) {
     var controladorAnime = CtrlAnime(rep)
     var controladorComment = CtrlComment(rep)
+    var controladorUser = CtrlUser(rep)
 
     // Starting point for a Ktor app:
     routing {
@@ -63,7 +65,7 @@ fun Application.configureRouting(rep: IRepo) {
 
         get("/comentarios/{id}") {
             val id = Integer.valueOf(call.parameters["id"])
-            call.respondText(controladorComment.getAllCommentsByReview(id))
+            call.respondText(controladorComment.getAllCommentsByReview(id, ))
         }
 
         post("/criar-comentario") {
