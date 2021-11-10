@@ -99,6 +99,21 @@ create table Rating
 alter table Rating
     add primary key (id);
 
+create table Watch_List
+(
+    id      int auto_increment,
+    idAnime int not null,
+    idUser  int not null,
+    constraint Watch_List_id_uindex
+        unique (id),
+    constraint WatchList_Anime_id_fk
+        foreign key (idAnime) references Anime (id),
+    constraint WatchList_User_id_fk
+        foreign key (idUser) references User (id)
+);
+
+alter table Watch_List
+    add primary key (id);
 
 
 
