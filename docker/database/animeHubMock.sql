@@ -82,6 +82,25 @@ create table Comment
         foreign key (idUser) references User (id)
 );
 
+create table Rating
+(
+    id      int auto_increment,
+    idUser  int not null,
+    idAnime int not null,
+    rating  int not null,
+    constraint Rating_id_uindex
+        unique (id),
+    constraint Rating_Anime_id_fk
+        foreign key (idAnime) references Anime (id),
+    constraint Rating_User_id_fk
+        foreign key (idUser) references User (id)
+);
+
+alter table Rating
+    add primary key (id);
+
+
+
 
 -- Criar animes
 INSERT INTO AnimeHubDB.Anime (title, id, image, synopsis, episodes, launchDate, studio, publicRating, websiteRating) VALUES ('Naruto', 1, 'https://br.web.img3.acsta.net/c_310_420/pictures/16/04/11/16/56/089875.jpg', 'Naruto é uma série de mangá escrita e ilustrada por Masashi Kishimoto', 220, '2002-10-03', 'Pierrot', -1, 10);
@@ -132,5 +151,13 @@ INSERT INTO AnimeHubDB.Comment (id, text, likes, deslikes, idUser, idAnime) VALU
 INSERT INTO AnimeHubDB.Genres (id, genre) VALUES (1, 'ACTION');
 INSERT INTO AnimeHubDB.Genres (id, genre) VALUES (2, 'ROMANCE');
 
+-- Criar Ratings
+INSERT INTO AnimeHubDB.Rating (id, idUser, idAnime, rating) VALUES (1, 1, 3, 2);
+INSERT INTO AnimeHubDB.Rating (id, idUser, idAnime, rating) VALUES (2, 1, 2, 3);
+INSERT INTO AnimeHubDB.Rating (id, idUser, idAnime, rating) VALUES (3, 1, 1, 3);
 
-
+-- Criar watchlists
+INSERT INTO AnimeHubDB.Watch_List (id, idAnime, idUser) VALUES (2, 2, 1);
+INSERT INTO AnimeHubDB.Watch_List (id, idAnime, idUser) VALUES (5, 15, 1);
+INSERT INTO AnimeHubDB.Watch_List (id, idAnime, idUser) VALUES (8, 3, 1);
+INSERT INTO AnimeHubDB.Watch_List (id, idAnime, idUser) VALUES (16, 1, 1);
