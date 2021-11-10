@@ -6,6 +6,7 @@ import models.User
 import repositories.IRepo
 import usecases.UcComment
 import usecases.UcUser
+import usecases.errors.USER_ALREADY_EXISTS
 
 class CtrlUser (rep:IRepo) {
     private val repo : IRepo
@@ -16,21 +17,31 @@ class CtrlUser (rep:IRepo) {
         ucUser = UcUser(repo)
     }
 
-    fun create(body: String): String {//TODO fazer
+    fun createUser(body: String): String {
         var map: HashMap<String, String> = HashMap()
         map = Gson().fromJson(body, map.javaClass)
-        val comment : Comment = Comment.fromHashMap(map)
-        //ucComment.create(comment)
-        return "User ${comment.text} was created"
+        val user : User = User.fromHashMap(map)
+        if (user.password.length != 64) {
+            return "Password must be 64 characters long"
+        }
+        try {
+            ucUser.createUser(user)
+            return "User ${user.login} was created"
+        } catch (e: USER_ALREADY_EXISTS) {
+            return "User ${user.login} already exists"
+        }
+
     }
 
-    fun update(body: String): String { //TODO fazer
+    fun login(body: String): String {
         var map: HashMap<String, String> = HashMap()
         map = Gson().fromJson(body, map.javaClass)
-        val comment : Comment = Comment.fromHashMap(map)
-        //ucComment.update(comment)
-        return "User ${comment.id} was updated"
+        return ucUser.login(map["login"]?:"-1", map["password"]?:"-1").toString()
+
+
+
     }
+
 
     fun getUserById(id: Int): User {
         return ucUser.getUserById(id.toString())

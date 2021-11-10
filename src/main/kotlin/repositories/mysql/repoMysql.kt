@@ -91,13 +91,16 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
 
     override fun getId(table: String, column: String, value: String): Int {
         val id: ResultSet = this.SQLStatement.executeQuery("SELECT id FROM ${this.DBName}.${table} WHERE ${column} = '${value}'")
-        id.next()
-        return id.getObject("id") as Int
+        if (id.next()) {
+            val idNumber = id.getObject("id") as Int?
+            return idNumber?: -1
+        }
+        return -1
+
     }
 
     override fun getById(table: String, id: String?): Map<String, String>? {
         val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE id = '${id}'")
-        println("SELECT * FROM ${this.DBName}.${table} WHERE id = '${id}'")
         val map = resultSetToList(result)
         return map[0]
     }

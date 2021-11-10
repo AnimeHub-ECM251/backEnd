@@ -65,6 +65,17 @@ fun Application.configureRouting(rep: IRepo) {
             call.respondText(controladorComment.create(request))
         }
 
+        post("/cadastrar-usuario") {
+            val request = call.receive<String>()
+            call.respondText(controladorUser.createUser(request))
+        }
+
+        post ("/logar-usuario") {
+            val request = call.receive<String>()
+            call.respondText(controladorUser.login(request))
+
+        }
+
     }
 
 }
