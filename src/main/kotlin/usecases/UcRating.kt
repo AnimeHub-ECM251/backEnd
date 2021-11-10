@@ -46,6 +46,17 @@ class UcRating(rep: IRepo){
 
     }
 
+    fun getUserRating(userId: Int, animeId: Int): Int {
+        val ratingList = repo.getAll("Rating","idUser = $userId AND idAnime = $animeId")
+        if (ratingList.isEmpty()) {
+            return -1
+        } else {
+            return ratingList[0]["rating"]!!.toInt()
+        }
+
+
+    }
+
 }
 
 fun main() {

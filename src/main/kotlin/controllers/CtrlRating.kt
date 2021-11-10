@@ -25,7 +25,23 @@ class CtrlRating(rep: IRepo) {
         } else {
             return "Rating must be between 0 and 5"
         }
+    }
 
+    fun getUserRating(userId: Int, animeId: Int): String {
+        val rating = ucRating.getUserRating(userId, animeId)
+        val map : HashMap<String, String>
+        if (rating != -1) {
+            map = hashMapOf<String, String>(
+                "rated" to "true",
+                "rating" to rating.toString()
+            )
+        } else {
+            map = hashMapOf<String, String>(
+                "rated" to "false",
+                "rating" to "-1"
+            )
+        }
+        return Gson().toJson(map)
     }
 
 

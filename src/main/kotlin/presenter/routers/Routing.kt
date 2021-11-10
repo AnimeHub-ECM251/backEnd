@@ -92,6 +92,12 @@ fun Application.configureRouting(rep: IRepo) {
             call.respondText(controladorRating.insert(request))
         }
 
+        get ("/user-rating/{animeId}/{userId}"){
+            val userId = Integer.valueOf(call.parameters["userId"])
+            val animeId = Integer.valueOf(call.parameters["animeId"])
+            call.respondText(controladorRating.getUserRating(animeId = animeId, userId = userId))
+        }
+
     }
 
 }
