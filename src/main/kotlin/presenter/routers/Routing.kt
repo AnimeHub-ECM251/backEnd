@@ -1,9 +1,6 @@
 package presenter.routers
 
-import controllers.CtrlAnime
-import controllers.CtrlComment
-import controllers.CtrlUser
-import controllers.CtrlWatch_List
+import controllers.*
 import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.http.*
@@ -21,6 +18,7 @@ fun Application.configureRouting(rep: IRepo) {
     var controladorComment = CtrlComment(rep)
     var controladorUser = CtrlUser(rep)
     var controladorWatch_List = CtrlWatch_List(rep)
+    var controladorRating = CtrlRating(rep)
 
     // Starting point for a Ktor app:
     routing {
@@ -89,6 +87,10 @@ fun Application.configureRouting(rep: IRepo) {
             call.respondText(controladorWatch_List.checkWatchlist(animeId, userId).toString())
         }
 
+        post("/user-rating"){
+            val request = call.receive<String>()
+            call.respondText(controladorRating.insert(request))
+        }
 
     }
 
