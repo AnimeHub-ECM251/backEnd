@@ -105,7 +105,7 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
         return map[0]
     }
 
-    override fun getAll(table: String, where: String): List<Any> {
+    override fun getAll(table: String, where: String): List<Map<String,String>> {
         val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE ${where}")
         val map = resultSetToList(result)
         return map
