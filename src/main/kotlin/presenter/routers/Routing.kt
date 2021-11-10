@@ -23,18 +23,10 @@ fun Application.configureRouting(rep: IRepo) {
     // Starting point for a Ktor app:
     routing {
         get("/") {
-            call.respondText("Hello World!")
-        }
-
-        get("/nome/{nome}") {
-            call.respondText("Hello, ${call.parameters["nome"]}")
+            call.respondText("Bem vindo a API Anime Hub! Onde você tem acesso as rotas necessárias para o Front End do Anime Hub! Obrigado pela preferência xD")
         }
 
         get("/anime/{id}") {
-            call.respondText("${controladorAnime.getAnimeById(call.parameters["id"])}", ContentType.Application.Json)
-        }
-
-        options("/anime/{id}") {
             call.respondText("${controladorAnime.getAnimeById(call.parameters["id"])}", ContentType.Application.Json)
         }
 
