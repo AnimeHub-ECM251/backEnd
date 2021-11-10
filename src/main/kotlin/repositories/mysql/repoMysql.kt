@@ -22,7 +22,7 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     private fun createConnection(): Connection {
         try {
             val c  = DriverManager.getConnection(
-                "jdbc:mysql://127.0.0.1:3306",
+                "jdbc:mysql://db:3306",
                 "root",
                 "password"
             )

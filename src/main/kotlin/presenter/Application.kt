@@ -12,6 +12,8 @@ import io.ktor.http.HttpHeaders.AccessControlAllowHeaders
 
 
 fun main() {
+    println("Servidor sendo iniciado!!!!@!!!!!!!")
+
     val repo : IRepo = RepoMysql()
 
     embeddedServer(Netty, port = 8081, host = "0.0.0.0") {
