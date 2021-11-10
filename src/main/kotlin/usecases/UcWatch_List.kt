@@ -24,6 +24,12 @@ class UcWatch_List(rep: IRepo){
         }
     }
 
+    fun checkWatchlist(idAnime: Int, idUser: Int): Boolean {
+        val watchList = repo.getAll("Watch_List","idUser = ${idUser} AND idAnime = ${idAnime}")
+        return watchList.isNotEmpty()
+
+    }
+
 }
 
 fun main() {

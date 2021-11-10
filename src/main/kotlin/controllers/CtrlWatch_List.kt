@@ -23,6 +23,11 @@ class CtrlWatch_List (rep: IRepo) {
         return ucWatch_List.insert(w)
 
     }
+
+    fun checkWatchlist(idAnime: Int, idUser: Int): Boolean{
+        return ucWatch_List.checkWatchlist(idAnime, idUser)
+
+    }
 //
 //    fun updateAnime(body: String): String {
 //        var map: HashMap<String, String> = HashMap()

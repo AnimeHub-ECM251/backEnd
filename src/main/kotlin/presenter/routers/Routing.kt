@@ -83,6 +83,12 @@ fun Application.configureRouting(rep: IRepo) {
             call.respondText(controladorWatch_List.insert(request))
         }
 
+        get("/watchlist/{animeId}/{userId}"){
+            val userId = Integer.valueOf(call.parameters["userId"])
+            val animeId = Integer.valueOf(call.parameters["animeId"])
+            call.respondText(controladorWatch_List.checkWatchlist(animeId, userId).toString())
+        }
+
 
     }
 
