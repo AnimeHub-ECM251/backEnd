@@ -3,7 +3,7 @@ version: '3.8'
 services:
  db:
   build:
-   context: .
+   context: ./docker/database
   container_name: mysql_
   ports:
   - 3306:3306
