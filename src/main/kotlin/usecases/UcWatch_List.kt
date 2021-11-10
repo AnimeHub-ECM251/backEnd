@@ -12,13 +12,15 @@ class UcWatch_List(rep: IRepo){
         this.repo = rep
     }
 
-    fun insert(w: Watch_List) {
+    fun insert(w: Watch_List): String {
         // checks if the user and anime are already in the watch list
         val watchList = repo.getAll("Watch_List","idUser = ${w.idUser} AND idAnime = ${w.idAnime}")
         if (watchList.isEmpty()) {
             this.repo.create("Watch_List", w.toHashMap())
+            return "Anime was inserted in Watchlist"
         } else {
             this.repo.delete("Watch_List",watchList[0]["id"]!!.toInt())
+            return "Anime was removed in Watchlist"
         }
     }
 

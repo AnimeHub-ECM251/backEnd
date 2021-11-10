@@ -20,8 +20,8 @@ class CtrlWatch_List (rep: IRepo) {
         var map: HashMap<String, String> = HashMap()
         map = Gson().fromJson(body, map.javaClass)
         val w : Watch_List = Watch_List.fromHashMap(map)
-        ucWatch_List.insert(w)
-        return "Watch_List was created"
+        return ucWatch_List.insert(w)
+
     }
 //
 //    fun updateAnime(body: String): String {

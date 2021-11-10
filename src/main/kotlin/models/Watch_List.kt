@@ -18,11 +18,11 @@ data class Watch_List (
         }
 
         companion object {
-                val properties : List<String> = listOf("idUser", "idAnime")
+                private val properties : List<String> = listOf("idUser", "idAnime")
 
                 fun fromHashMap(map: HashMap<String, String>) : Watch_List{
                         val a = map.keys.toList()
-                        if (a.containsAll(Anime.properties)) {
+                        if (a.containsAll(Watch_List.properties)) {
                                 return Watch_List(map["id"]?.toInt()?:-1, map["idUser"]!!.toInt(), map["idAnime"]!!.toInt())
                         } else throw INTANCE_PROPERTIES_DONT_MATCH()
 
