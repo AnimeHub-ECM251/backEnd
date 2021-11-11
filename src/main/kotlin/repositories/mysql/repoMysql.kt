@@ -20,9 +20,10 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     }
 
     private fun createConnection(): Connection {
+        println("jdbc:mysql://${System.getenv("DATABASE_URL") ?: "localhost"}:3306")
         try {
             val c  = DriverManager.getConnection(
-                "jdbc:mysql://db:3306",
+                "jdbc:mysql://${System.getenv("DATABASE_URL") ?: "localhost"}:3306",
                 "root",
                 "password"
             )

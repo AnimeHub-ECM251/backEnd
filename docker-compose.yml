@@ -14,12 +14,19 @@ services:
   build:
    context: .
   container_name: api_
-  depends_on:
-   - "db"
   ports:
   - 8081:8081
   networks:
    - default
+  deploy:
+    restart_policy:
+     condition: on-failure
+     delay: 5s
+     max_attempts: 10
+     window: 10s
+
+  environment:
+   - DATABASE_URL=db
 
 networks:
  my-network:

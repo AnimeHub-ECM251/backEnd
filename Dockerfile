@@ -3,6 +3,9 @@ FROM maven:3.6.0-jdk-8-alpine
 
 EXPOSE 8081
 EXPOSE 3306
+
+ENV DATABASE_URL db
+
 ## download dependencies
 ADD pom.xml /
 RUN mvn verify clean
