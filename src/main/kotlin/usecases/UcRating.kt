@@ -1,5 +1,6 @@
 package usecases
 
+import models.Anime
 import models.Comment
 import models.Rating
 import models.Watch_List
@@ -34,15 +35,19 @@ class UcRating(rep: IRepo){
     fun insert(r: Rating): String {
         // checks if the user and anime are already in the watch list
         val ratingList = repo.getAll("Rating","idUser = ${r.idUser} AND idAnime = ${r.idAnime}")
+        val result : String
+
         if (ratingList.isEmpty()) {
             this.repo.create("Rating", r.toHashMap())
-            return "Anime was inserted in Rating"
+            result = "Anime was inserted in Rating"
         } else {
             var r_map = r.toHashMap()
             r_map["id"] = ratingList[0]["id"]!!
             this.repo.update("Rating", r_map)
-            return "Anime was updated in Rating (${ratingList[0]["rating"]} → ${r.rating})"
+            result = "Anime was updated in Rating (${ratingList[0]["rating"]} → ${r.rating})"
         }
+        updatePublicRating(r.idAnime)
+        return result
 
     }
 
@@ -53,8 +58,25 @@ class UcRating(rep: IRepo){
         } else {
             return ratingList[0]["rating"]!!.toInt()
         }
+    }
 
+    fun updatePublicRating(idAnime: Int) {
+        // Get new rating
+        val ratingList = this.repo.getAll("Rating", "idAnime = ${idAnime}")
+        var sum : Double = 0.0
+        var count : Double = 0.0
+        for (map in ratingList) {
+            sum += map["rating"]!!.toInt()
+            count++
+        }
+        var avg : Double = sum / count
+        avg = Math.round(avg * 2) / 2.0
 
+        // Update anime Rating
+        val ucAnime = UcAnime(repo)
+        var anime = ucAnime.getAnime(idAnime.toString())
+        anime.publicRating = avg
+        ucAnime.updateAnime(anime)
     }
 
 }
