@@ -1,5 +1,6 @@
 package usecases
 
+import com.google.gson.Gson
 import models.Anime
 import repositories.IRepo
 
@@ -36,8 +37,4 @@ class UcAnime (rep: IRepo) {
         }
         return animeList
     }
-
-
-
-
 }
