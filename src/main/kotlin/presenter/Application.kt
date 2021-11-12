@@ -21,6 +21,9 @@ fun main() {
             method(HttpMethod.Options)
             anyHost()
         }
+        install(DefaultHeaders) {
+            header(HttpHeaders.AcceptCharset, "utf-8")
+        }
         configureRouting(repo)
     }.start(wait = true)
 }
