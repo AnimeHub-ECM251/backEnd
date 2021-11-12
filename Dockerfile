@@ -1,7 +1,7 @@
 # Part 1: Build the app using Maven
 FROM maven:3.6.0-jdk-8-alpine
 
-EXPOSE 8081
+EXPOSE 8080
 EXPOSE 3306
 
 ENV DATABASE_URL db
@@ -17,26 +17,7 @@ RUN mvn package
 FROM openjdk:8-jdk-alpine
 
 # Set Container to PT-BR UTF-8
-RUN apk update
-RUN apk add tzdata
-RUN cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
-RUN rm -r /usr/share/zoneinfo/Africa && \
-    rm -r /usr/share/zoneinfo/Antarctica && \
-    rm -r /usr/share/zoneinfo/Arctic && \
-    rm -r /usr/share/zoneinfo/Asia && \
-    rm -r /usr/share/zoneinfo/Atlantic && \
-    rm -r /usr/share/zoneinfo/Australia && \
-    rm -r /usr/share/zoneinfo/Europe  && \
-    rm -r /usr/share/zoneinfo/Indian && \
-    rm -r /usr/share/zoneinfo/Mexico && \
-    rm -r /usr/share/zoneinfo/Pacific && \
-    rm -r /usr/share/zoneinfo/Chile && \
-    rm -r /usr/share/zoneinfo/Canada
-RUN echo "America/Sao_Paulo" >  /etc/timezone
 
-RUN echo "Isso é são páùlõ"
-
-ENV TZ America/Sao_Paulo
 ENV LANG pt_BR.UTF-8
 ENV LANGUAGE pt_BR.UTF-8
 ENV LC_ALL pt_BR.UTF-8
