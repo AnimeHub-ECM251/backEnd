@@ -20,14 +20,20 @@ fun Application.configureRouting(rep: IRepo) {
     var controladorWatch_List = CtrlWatch_List(rep)
     var controladorRating = CtrlRating(rep)
 
+
     // Starting point for a Ktor app:
     routing {
         get("/") {
             call.respondText("Bem vindo a API Anime Hub! Onde você tem acesso as rotas necessárias para o Front End do Anime Hub! Obrigado pela preferência xD")
         }
 
+
         get("/anime/{id}") {
-            call.respondText("${controladorAnime.getAnimeById(call.parameters["id"])}", ContentType.Application.Json)
+            try{
+                call.respondText("${controladorAnime.getAnimeById(call.parameters["id"])}", ContentType.Application.Json)
+            }catch (e : Exception){
+                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+            }
         }
 
         post("/criar-anime") {
@@ -47,17 +53,29 @@ fun Application.configureRouting(rep: IRepo) {
         }
 
         get("/todos-animes") {
-            call.respondText(controladorAnime.getAllAnimes().toString())
+            try{
+                call.respondText(controladorAnime.getAllAnimes().toString())
+            }catch (e : Exception){
+                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+            }
         }
 
         get("todos-animes/id/{page}"){
-            val page : Int? = call.parameters["page"]?.toInt()
-            call.respondText(controladorAnime.getAnimesPage(page).toString())
+            try{
+                val page : Int? = call.parameters["page"]?.toInt()
+                call.respondText(controladorAnime.getAnimesPage(page).toString())
+            }catch (e : Exception){
+                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+            }
         }
 
         get("/comentarios/{id}") {
-            val id = Integer.valueOf(call.parameters["id"])
-            call.respondText(controladorComment.getAllCommentsByReview(id, ))
+            try{
+                val id = Integer.valueOf(call.parameters["id"])
+                call.respondText(controladorComment.getAllCommentsByReview(id, ))
+            }catch (e : Exception){
+                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+            }
         }
 
         post("/criar-comentario") {
@@ -82,9 +100,13 @@ fun Application.configureRouting(rep: IRepo) {
         }
 
         get("/watchlist/{animeId}/{userId}"){
-            val userId = Integer.valueOf(call.parameters["userId"])
-            val animeId = Integer.valueOf(call.parameters["animeId"])
-            call.respondText(controladorWatch_List.checkWatchlist(animeId, userId).toString())
+            try{
+                val userId = Integer.valueOf(call.parameters["userId"])
+                val animeId = Integer.valueOf(call.parameters["animeId"])
+                call.respondText(controladorWatch_List.checkWatchlist(animeId, userId).toString())
+            }catch (e : Exception){
+                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+            }
         }
 
         post("/user-rating"){
@@ -93,9 +115,14 @@ fun Application.configureRouting(rep: IRepo) {
         }
 
         get ("/user-rating/{animeId}/{userId}"){
-            val userId = Integer.valueOf(call.parameters["userId"])
-            val animeId = Integer.valueOf(call.parameters["animeId"])
-            call.respondText(controladorRating.getUserRating(animeId = animeId, userId = userId))
+            try{
+                val userId = Integer.valueOf(call.parameters["userId"])
+                val animeId = Integer.valueOf(call.parameters["animeId"])
+                call.respondText(controladorRating.getUserRating(animeId = animeId, userId = userId))
+            }catch (e : Exception){
+                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+            }
+
         }
 
     }
