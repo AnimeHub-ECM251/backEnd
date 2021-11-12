@@ -1,17 +1,19 @@
 package presenter
 
 import io.ktor.application.*
+import io.ktor.features.*
+import io.ktor.http.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import kotlinx.coroutines.time.delay
 import presenter.routers.*
 import repositories.IRepo
 import repositories.mysql.RepoMysql
-import io.ktor.features.*
-import io.ktor.http.*
-import io.ktor.http.HttpHeaders.AccessControlAllowHeaders
-import kotlinx.coroutines.delay
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.schedule
+
+
 
 
 fun main() {
@@ -26,9 +28,7 @@ fun main() {
         } catch (e : Exception) {
             println("Não foi possível se conectar com o DB: ${e}")
             println("Tentando conexão novamente em 5 segundos...")
-            Timer().schedule(5000) {
-                println("Tentando novamente...")
-            }
+            TimeUnit.SECONDS.sleep(5)
         }
         }
 
