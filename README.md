@@ -9,6 +9,8 @@
 ` docker-compose up`
 
 # Documentação da API
+Documentação criada no [Postman](https://www.postman.com/) e gerada com [docgen](https://github.com/thedevsaddam/docgen) 
+
 
 # AnimeHubAPI
 
