@@ -42,7 +42,7 @@ fun Application.configureRouting(rep: IRepo) {
         }
 
         post("/atualizar-anime") {
-            val request = call.receive<String>()
+            val request = call.receive<String>() //TODO corrigir
             call.respondText(controladorAnime.updateAnime(request))
         }
 
