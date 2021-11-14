@@ -7,7 +7,6 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import io.ktor.util.*
 import models.Anime
 import models.errors.INTANCE_PROPERTIES_DONT_MATCH
 import repositories.IRepo
@@ -15,7 +14,7 @@ import java.lang.IndexOutOfBoundsException
 import java.sql.SQLException
 
 
-fun defaultExcpetions(e: Exception) : String{
+fun defaultExceptions(e: Exception) : String{
     return when(e::class) {
         SQLException::class -> "Erro de sintaxe SQL: $e"
         NumberFormatException::class -> "Erro de formatação numérica: $e"
@@ -49,7 +48,7 @@ fun Application.configureRouting(rep: IRepo) {
                 call.respondText("Este Anime não existe!", status = HttpStatusCode.BadRequest)
             }
             catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -58,7 +57,7 @@ fun Application.configureRouting(rep: IRepo) {
                 val request = call.receive<String>()
                 call.respondText(controladorAnime.createAnime(request))
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -68,7 +67,7 @@ fun Application.configureRouting(rep: IRepo) {
                 val request = call.receive<String>()
                 call.respondText(controladorAnime.updateAnime(idAnime, request))
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
 
         }
@@ -79,7 +78,7 @@ fun Application.configureRouting(rep: IRepo) {
                 println(request.toInt())
                 call.respondText(controladorAnime.deleteAnime(request.toInt()))
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -87,7 +86,7 @@ fun Application.configureRouting(rep: IRepo) {
             try{
                 call.respondText(controladorAnime.getAllAnimes().toString())
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -96,7 +95,7 @@ fun Application.configureRouting(rep: IRepo) {
                 val page : Int? = call.parameters["page"]?.toInt()
                 call.respondText(controladorAnime.getAnimesPage(page).toString())
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -105,7 +104,7 @@ fun Application.configureRouting(rep: IRepo) {
                 val id = Integer.valueOf(call.parameters["id"])
                 call.respondText(controladorComment.getAllCommentsByReview(id))
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -114,7 +113,7 @@ fun Application.configureRouting(rep: IRepo) {
                 val request = call.receive<String>()
                 call.respondText(controladorComment.create(request))
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -123,7 +122,7 @@ fun Application.configureRouting(rep: IRepo) {
                 val request = call.receive<String>()
                 call.respondText(controladorUser.createUser(request))
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -132,7 +131,7 @@ fun Application.configureRouting(rep: IRepo) {
                 val request = call.receive<String>()
                 call.respondText(controladorUser.login(request))
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
 
         }
@@ -142,7 +141,7 @@ fun Application.configureRouting(rep: IRepo) {
                 val request = call.receive<String>()
                 call.respondText(controladorWatch_List.insert(request))
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -152,7 +151,7 @@ fun Application.configureRouting(rep: IRepo) {
                 val animeId = Integer.valueOf(call.parameters["animeId"])
                 call.respondText(controladorWatch_List.checkWatchlist(animeId, userId).toString())
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -161,7 +160,7 @@ fun Application.configureRouting(rep: IRepo) {
                 val request = call.receive<String>()
                 call.respondText(controladorRating.insert(request))
             } catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -171,7 +170,7 @@ fun Application.configureRouting(rep: IRepo) {
                 val animeId = Integer.valueOf(call.parameters["animeId"])
                 call.respondText(controladorRating.getUserRating(animeId = animeId, userId = userId))
             }catch (e: Exception){
-                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
     }
