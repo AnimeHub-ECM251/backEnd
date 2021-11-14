@@ -1,3 +1,5 @@
+# Credits to https://gist.github.com/codemwnci/cab2575fafaa902a178a2cebe83b1cf4
+
 # Part 1: Build the app using Maven
 FROM maven:3.6.0-jdk-8-alpine
 
