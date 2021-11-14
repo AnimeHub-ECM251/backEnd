@@ -30,7 +30,7 @@ fun main() {
             println("Tentando conexão novamente em 5 segundos...")
             TimeUnit.SECONDS.sleep(5)
         }
-        }
+    }
 
 
 

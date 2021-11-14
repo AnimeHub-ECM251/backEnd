@@ -22,7 +22,7 @@ class UcComment (rep: IRepo){
         this.repo.delete("Comment", id)
     }
 
-    fun get(id: String?): Comment {
+    fun get(id: Int): Comment {
         val map = this.repo.getById("Comment", id)
         val comment = Comment.fromHashMap(map as HashMap<String, String>)
         return comment

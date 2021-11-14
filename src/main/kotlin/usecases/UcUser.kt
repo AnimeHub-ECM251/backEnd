@@ -29,7 +29,7 @@ class UcUser (rep: IRepo) {
         this.repo.delete("user", id)
     }
 
-    fun getUserById(id: String?): User {
+    fun getUserById(id: Int): User {
         val map = this.repo.getById("User", id)
         val user = User.fromHashMap(map as HashMap<String, String>)
         return user
@@ -38,7 +38,7 @@ class UcUser (rep: IRepo) {
     fun getUserByLogin(login: String?): User? {
         val id = this.repo.getId("User", "login", login.toString())
         if (id != -1) {
-            return this.getUserById(id.toString())
+            return this.getUserById(id)
         }
         return null
     }

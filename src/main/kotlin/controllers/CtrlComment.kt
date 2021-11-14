@@ -39,7 +39,7 @@ class CtrlComment (rep:IRepo){
         val comments = ucComment.getAllCommentsByReview(id)
         var commentsMap : MutableList<HashMap<String,String>> = mutableListOf()
         comments.forEach { comment ->
-            val username = ucUser.getUserById(comment.idUser.toString()).login
+            val username = ucUser.getUserById(comment.idUser).login
             var commentMap = comment.toHashMap()
             commentMap.put("username", username.toString())
             commentsMap.add(commentMap)

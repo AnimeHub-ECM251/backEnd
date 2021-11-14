@@ -27,14 +27,12 @@ class CtrlAnime (rep: IRepo) {
         return "Anime ${a.title} was created"
     }
 
-    fun updateAnime(body: String): String {
+    fun updateAnime(idAnime: Int, body: String): String {
         var map: HashMap<String, String> = HashMap()
         map = Gson().fromJson(body, map.javaClass)
-        val a : Anime = Anime.fromHashMap(map)
-        val id: Int = this.repo.getId("Anime", "title", a.title)
-        a.id = id
-        ucAnime.updateAnime(a)
-        return "Anime ${a.title} was updated"
+        map["id"] = idAnime.toString()
+        ucAnime.updateAnime(map)
+        return "Anime $idAnime was updated"
     }
 
     fun deleteAnime(id: Int): String {
@@ -42,8 +40,8 @@ class CtrlAnime (rep: IRepo) {
         return "Anime #${id} was deleted"
     }
 
-    fun getAnimeById(id: String?): Anime {
-        return ucAnime.getAnime(id)
+    fun getAnimeById(id: String): Anime {
+        return ucAnime.getAnime(id.toInt())
     }
 
     fun getAllAnimes(): List<Anime> {

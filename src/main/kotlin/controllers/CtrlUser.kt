@@ -44,7 +44,7 @@ class CtrlUser (rep:IRepo) {
 
 
     fun getUserById(id: Int): User {
-        return ucUser.getUserById(id.toString())
+        return ucUser.getUserById(id)
 
     }
 

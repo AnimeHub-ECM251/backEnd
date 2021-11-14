@@ -26,7 +26,7 @@ class UcRating(rep: IRepo){
         this.repo.delete("Rating", id)
     }
 
-    fun get(id: String?): Rating {
+    fun get(id: Int): Rating {
         val map = this.repo.getById("Rating", id)
         val rating = Rating.fromHashMap(map as HashMap<String, String>)
         return rating
@@ -74,9 +74,9 @@ class UcRating(rep: IRepo){
 
         // Update anime Rating
         val ucAnime = UcAnime(repo)
-        var anime = ucAnime.getAnime(idAnime.toString())
+        var anime = ucAnime.getAnime(idAnime)
         anime.publicRating = avg
-        ucAnime.updateAnime(anime)
+        ucAnime.updateAnime(anime.toHashMap())
     }
 
 }

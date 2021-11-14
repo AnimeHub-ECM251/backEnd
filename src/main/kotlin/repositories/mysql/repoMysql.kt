@@ -58,13 +58,8 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     }
 
     private fun executeStatement(query: String) {
-        try {
-            val preparedStatement = this.connection!!.prepareStatement(query)
-            preparedStatement!!.executeUpdate()
-        }
-        catch (e: SQLException){
-            println("Not possible to execute update: ${e.message}")
-        }
+        val preparedStatement = this.connection!!.prepareStatement(query)
+        preparedStatement!!.executeUpdate()
 
     }
 
@@ -99,7 +94,7 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
 
     }
 
-    override fun getById(table: String, id: String?): Map<String, String>? {
+    override fun getById(table: String, id: Int): Map<String, String>? {
         val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE id = '${id}'")
         val map = resultSetToList(result)
         return map[0]
