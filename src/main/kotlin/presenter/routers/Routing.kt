@@ -18,7 +18,7 @@ fun defaultExceptions(e: Exception) : String{
     return when(e::class) {
         SQLException::class -> "Erro de sintaxe SQL: $e"
         NumberFormatException::class -> "Erro de formatação numérica: $e"
-        INTANCE_PROPERTIES_DONT_MATCH::class ->"Parametros incorretos para anime, seu JSON possui: ${Anime.properties}?"
+        INTANCE_PROPERTIES_DONT_MATCH::class -> "Parametros incorretos para anime, seu JSON possui: ${Anime.properties}?"
         JsonSyntaxException::class -> "Seu JSON está incorreto!"
         else -> "Ops, algo deu errado: $e"
     }
