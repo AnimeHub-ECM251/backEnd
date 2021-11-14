@@ -1,6 +1,7 @@
 package controllers
 
 import com.google.gson.Gson
+import controllers.errors.RATING_OUT_OF_RANGE
 import models.Rating
 import models.Watch_List
 import repositories.IRepo
@@ -23,7 +24,7 @@ class CtrlRating(rep: IRepo) {
         if (r.rating >= 0 && r.rating <= 5) {
             return ucRating.insert(r)
         } else {
-            return "Rating must be between 0 and 5"
+            throw RATING_OUT_OF_RANGE()
         }
     }
 
