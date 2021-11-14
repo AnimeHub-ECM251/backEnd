@@ -1,16 +1,29 @@
 package presenter.routers
 
+import com.google.gson.JsonSyntaxException
 import controllers.*
-import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
+import io.ktor.routing.*
+import io.ktor.util.*
+import models.Anime
+import models.errors.INTANCE_PROPERTIES_DONT_MATCH
 import repositories.IRepo
+import java.lang.IndexOutOfBoundsException
+import java.sql.SQLException
 
 
-
-
+fun defaultExcpetions(e: Exception) : String{
+    return when(e::class) {
+        SQLException::class -> "Erro de sintaxe SQL: $e"
+        NumberFormatException::class -> "Erro de formatação numérica: $e"
+        INTANCE_PROPERTIES_DONT_MATCH::class ->"Parametros incorretos para anime, seu JSON possui: ${Anime.properties}?"
+        JsonSyntaxException::class -> "Seu JSON está incorreto!"
+        else -> "Ops, algo deu errado: $e"
+    }
+}
 
 
 fun Application.configureRouting(rep: IRepo) {
@@ -23,6 +36,7 @@ fun Application.configureRouting(rep: IRepo) {
 
     // Starting point for a Ktor app:
     routing {
+
         get("/") {
             call.respondText("Bem vindo a API Anime Hub! Onde você tem acesso as rotas necessárias para o Front End do Anime Hub! Obrigado pela preferência xD")
         }
@@ -30,33 +44,50 @@ fun Application.configureRouting(rep: IRepo) {
 
         get("/anime/{id}") {
             try{
-                call.respondText("${controladorAnime.getAnimeById(call.parameters["id"])}", ContentType.Application.Json)
-            }catch (e : Exception){
-                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+                call.respondText("${controladorAnime.getAnimeById(call.parameters["id"]!!)}", ContentType.Application.Json)
+            } catch (e: IndexOutOfBoundsException){
+                call.respondText("Este Anime não existe!", status = HttpStatusCode.BadRequest)
+            }
+            catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
         post("/criar-anime") {
-            val request = call.receive<String>()
-            call.respondText(controladorAnime.createAnime(request))
+            try {
+                val request = call.receive<String>()
+                call.respondText(controladorAnime.createAnime(request))
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+            }
         }
 
-        post("/atualizar-anime") {
-            val request = call.receive<String>() //TODO corrigir
-            call.respondText(controladorAnime.updateAnime(request))
+        post("/atualizar-anime/{idAnime}") {
+            try {
+                val idAnime: Int = call.parameters["idAnime"]!!.toInt()
+                val request = call.receive<String>()
+                call.respondText(controladorAnime.updateAnime(idAnime, request))
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+            }
+
         }
 
         post("/deletar-anime") {
-            val request = call.receive<String>()
-            println(request.toInt())
-            call.respondText(controladorAnime.deleteAnime(request.toInt()))
+            try{
+                val request = call.receive<String>()
+                println(request.toInt())
+                call.respondText(controladorAnime.deleteAnime(request.toInt()))
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+            }
         }
 
         get("/todos-animes") {
             try{
                 call.respondText(controladorAnime.getAllAnimes().toString())
-            }catch (e : Exception){
-                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
@@ -64,39 +95,55 @@ fun Application.configureRouting(rep: IRepo) {
             try{
                 val page : Int? = call.parameters["page"]?.toInt()
                 call.respondText(controladorAnime.getAnimesPage(page).toString())
-            }catch (e : Exception){
-                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
         get("/comentarios/{id}") {
             try{
                 val id = Integer.valueOf(call.parameters["id"])
-                call.respondText(controladorComment.getAllCommentsByReview(id, ))
-            }catch (e : Exception){
-                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+                call.respondText(controladorComment.getAllCommentsByReview(id))
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
         post("/criar-comentario") {
-            val request = call.receive<String>()
-            call.respondText(controladorComment.create(request))
+            try {
+                val request = call.receive<String>()
+                call.respondText(controladorComment.create(request))
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+            }
         }
 
         post("/cadastrar-usuario") {
-            val request = call.receive<String>()
-            call.respondText(controladorUser.createUser(request))
+            try {
+                val request = call.receive<String>()
+                call.respondText(controladorUser.createUser(request))
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+            }
         }
 
         post ("/logar-usuario") {
-            val request = call.receive<String>()
-            call.respondText(controladorUser.login(request))
+            try {
+                val request = call.receive<String>()
+                call.respondText(controladorUser.login(request))
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+            }
 
         }
 
         post("/anime-watchlist"){
-            val request = call.receive<String>()
-            call.respondText(controladorWatch_List.insert(request))
+            try {
+                val request = call.receive<String>()
+                call.respondText(controladorWatch_List.insert(request))
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+            }
         }
 
         get("/watchlist/{animeId}/{userId}"){
@@ -104,14 +151,18 @@ fun Application.configureRouting(rep: IRepo) {
                 val userId = Integer.valueOf(call.parameters["userId"])
                 val animeId = Integer.valueOf(call.parameters["animeId"])
                 call.respondText(controladorWatch_List.checkWatchlist(animeId, userId).toString())
-            }catch (e : Exception){
-                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
             }
         }
 
         post("/user-rating"){
-            val request = call.receive<String>()
-            call.respondText(controladorRating.insert(request))
+            try {
+                val request = call.receive<String>()
+                call.respondText(controladorRating.insert(request))
+            } catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
+            }
         }
 
         get ("/user-rating/{animeId}/{userId}"){
@@ -119,12 +170,9 @@ fun Application.configureRouting(rep: IRepo) {
                 val userId = Integer.valueOf(call.parameters["userId"])
                 val animeId = Integer.valueOf(call.parameters["animeId"])
                 call.respondText(controladorRating.getUserRating(animeId = animeId, userId = userId))
-            }catch (e : Exception){
-                call.respondText("Ops, algo deu errado.\n\n${e.stackTraceToString()}" , ContentType.Application.Json)
+            }catch (e: Exception){
+                call.respondText(defaultExcpetions(e), status = HttpStatusCode.BadRequest)
             }
-
         }
-
     }
-
 }
