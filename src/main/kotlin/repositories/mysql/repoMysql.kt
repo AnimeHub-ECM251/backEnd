@@ -13,6 +13,11 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     private val SQLStatement: Statement
     private val DBName: String
 
+    companion object {
+        val url = "${System.getenv("DATABASE_URL") ?: "localhost"}"
+        val port = 3306
+    }
+
     init {
         this.connection = createConnection()
         this.SQLStatement = createStatement()
@@ -22,7 +27,7 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     private fun createConnection(): Connection {
         try {
             val c  = DriverManager.getConnection(
-                "jdbc:mysql://${System.getenv("DATABASE_URL") ?: "localhost"}:3306/?characterEncoding=utf8&useUnicode=true",
+                "jdbc:mysql://$url:$port/?characterEncoding=utf8&useUnicode=true",
                 "root",
                 "password"
             )

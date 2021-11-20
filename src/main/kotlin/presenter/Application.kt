@@ -17,16 +17,16 @@ import kotlin.concurrent.schedule
 
 
 fun main() {
-    println("Servidor sendo iniciado!!!!!!!!!!!")
+    println("Servidor sendo iniciado!")
 
     var repo : IRepo
 
     while (true) {
         try {
             repo = RepoMysql()
-            break;
+            break
         } catch (e : Exception) {
-            println("Não foi possível se conectar com o DB: ${e}")
+//            println("Não foi possível se conectar com o DB: ${e.message}")
             println("Tentando conexão novamente em 5 segundos...")
             TimeUnit.SECONDS.sleep(5)
         }
