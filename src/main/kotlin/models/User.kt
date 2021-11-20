@@ -23,19 +23,22 @@ data class User(
     }
 
     companion object {
-        public val defaultProfilePicture = "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-        public val defaultRole = 1
+        val defaultProfilePicture = "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+        val defaultRole = 1
         private val properties : List<String> = listOf("login", "email")
 
         fun fromHashMap(map: HashMap<String, String>) : User{
             val mapKeys = map.keys.toList()
             if (mapKeys.containsAll(User.properties)) {
-                val user = User(login=map["login"]!!, email=map["email"]!!, profilePicture=map["profilePicture"]?:defaultProfilePicture,
-                                role=map["role"]?.toInt()?:defaultRole, id=map["id"]?.toInt(), password=map["password"]?:"-")
-                return user
-
+                return User(
+                    login = map["login"]!!,
+                    email = map["email"]!!,
+                    profilePicture = map["profilePicture"] ?: defaultProfilePicture,
+                    role = map["role"]?.toInt() ?: defaultRole,
+                    id = map["id"]?.toInt(),
+                    password = map["password"] ?: "-"
+                )
             } else throw INTANCE_PROPERTIES_DONT_MATCH()
-
         }
     }
 

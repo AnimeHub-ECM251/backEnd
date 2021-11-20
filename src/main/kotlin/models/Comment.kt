@@ -29,9 +29,10 @@ data class Comment(
         fun fromHashMap(map: HashMap<String, String>) : Comment{
             val mapKeys = map.keys.toList()
             if (mapKeys.containsAll(Comment.properties)) {
-                val comment = Comment(map["id"]?.toInt(), map["text"]!!, (map["likes"]?.toInt() ?: 0),
-                    (map["deslikes"]?.toInt() ?: 0), map["idUser"]!!.toInt(), map["idAnime"]!!.toInt())
-                return comment
+                return Comment(
+                    map["id"]?.toInt(), map["text"]!!, (map["likes"]?.toInt() ?: 0),
+                    (map["deslikes"]?.toInt() ?: 0), map["idUser"]!!.toInt(), map["idAnime"]!!.toInt()
+                )
 
             } else throw INTANCE_PROPERTIES_DONT_MATCH()
 
@@ -39,12 +40,8 @@ data class Comment(
     }
 
     override fun toString(): String {
-        // Gets a hashmap representation of the object
         val map = this.toHashMap()
-        // converts the hashmap to json
-        val json = Gson().toJson(map)
-        // returns the json
-        return json
+        return Gson().toJson(map)
     }
 
 }

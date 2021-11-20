@@ -7,7 +7,6 @@ package models
 import com.google.gson.Gson
 import models.errors.INTANCE_PROPERTIES_DONT_MATCH
 import java.time.LocalDate
-import kotlin.reflect.full.declaredMemberProperties
 
 data class Anime(
     var title: String,
@@ -40,32 +39,20 @@ data class Anime(
         fun fromHashMap(map: HashMap<String, String>) : Anime{
             val a = map.keys.toList()
             if (a.containsAll(Anime.properties)) {
-                val a = Anime(map["title"]!!, map["id"]?.toInt(), map["image"]!!,
+                return Anime(
+                    map["title"]!!, map["id"]?.toInt(), map["image"]!!,
                     map["synopsis"]!!, map["episodes"]!!.toInt(), LocalDate.parse(map["launchDate"]!!),
-                    map["studio"]!!, map["publicRating"]?.toDouble()?:-1.0, map["websiteRating"]?.toDouble()?:-1.0)
-                return a
-
+                    map["studio"]!!, map["publicRating"]?.toDouble() ?: -1.0, map["websiteRating"]?.toDouble() ?: -1.0
+                )
             } else throw INTANCE_PROPERTIES_DONT_MATCH()
-
         }
     }
 
     override fun toString(): String {
-        // Gets a hashmap representation of the object
         val map = this.toHashMap()
-        // converts the hashmap to json
-        val json = Gson().toJson(map)
-        // returns the json
-        return json
+        return Gson().toJson(map)
     }
 
 }
 
 
-fun main(){
-    Anime.fromHashMap(hashMapOf("title" to "a", "id" to "2", "image" to "a", "synopsis" to "a", "episodes" to "10",
-        "launchDate" to "2021-11-10", "studio" to "a"))
-//    val date = LocalDate.parse("2021-11-10")
-//    val a = Anime("title", 2, "dasd", "sy", 15, date, "studio")
-
-}
