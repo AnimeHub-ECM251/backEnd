@@ -43,12 +43,12 @@ class UcUser (rep: IRepo) {
         return null
     }
 
-    fun login(login: String, password: String): Boolean {
+    fun login(login: String, password: String): Int {
         val user = this.getUserByLogin(login)
         if (user != null && user.password == password) {
-            return true
+            return user.id!!
         }
-        return false
+        return -1
     }
 
     fun getAllAUser(): List<User> {
