@@ -30,12 +30,26 @@ class UcWatch_List(rep: IRepo){
 
     }
 
+    fun getUserWatchList(idUser: Int): List<Int> {
+        val watchList = repo.getAll("Watch_List","idUser = ${idUser}")
+        val list = mutableListOf<Int>()
+        for (w in watchList) {
+            if (w["idAnime"] != null) {
+                list.add(w["idAnime"]!!.toInt())
+            }
+        }
+        return list
+    }
+
+
+
 }
 
 fun main() {
     val repo = RepoMysql()
     val uc = UcWatch_List(repo)
-    val w = Watch_List(-1,1,3)
-    uc.insert(w)
+
+
+
 
 }

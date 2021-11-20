@@ -155,6 +155,15 @@ fun Application.configureRouting(rep: IRepo) {
             }
         }
 
+        get("/watchlist/user/{userId}"){
+            try{
+                val userId = Integer.valueOf(call.parameters["userId"])
+                call.respondText(controladorWatch_List.getUserWatchList(userId))
+            } catch (e: Exception){
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
+            }
+        }
+
         post("/user-rating"){
             try {
                 val request = call.receive<String>()
