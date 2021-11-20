@@ -18,7 +18,7 @@ class CtrlComment (rep:IRepo){
         ucComment = UcComment(rep)
     }
 
-    fun create(body: String): String {
+    fun createComment(body: String): String {
         var map: HashMap<String, String> = HashMap()
         map = Gson().fromJson(body, map.javaClass)
         val comment : Comment = Comment.fromHashMap(map)
@@ -26,7 +26,7 @@ class CtrlComment (rep:IRepo){
         return "Comment ${comment.text} was created"
     }
 
-    fun update(body: String): String {
+    fun updateComment(body: String): String {
         var map: HashMap<String, String> = HashMap()
         map = Gson().fromJson(body, map.javaClass)
         val comment : Comment = Comment.fromHashMap(map)
@@ -34,14 +34,14 @@ class CtrlComment (rep:IRepo){
         return "Comment ${comment.id} was updated"
     }
 
-    fun getAllCommentsByReview(id: Int?): String { //TODO retornar o nome do usuarios
+    fun getAllCommentsByReview(id: Int?): String {
         val ucUser = UcUser(repo)
         val comments = ucComment.getAllCommentsByReview(id)
-        var commentsMap : MutableList<HashMap<String,String>> = mutableListOf()
+        val commentsMap : MutableList<HashMap<String,String>> = mutableListOf()
         comments.forEach { comment ->
             val username = ucUser.getUserById(comment.idUser).login
-            var commentMap = comment.toHashMap()
-            commentMap.put("username", username.toString())
+            val commentMap = comment.toHashMap()
+            commentMap["username"] = username.toString()
             commentsMap.add(commentMap)
         }
         return Gson().toJson(commentsMap)
@@ -49,13 +49,6 @@ class CtrlComment (rep:IRepo){
 
 }
 
-fun main() {
-    val rep = RepoMysql()
-    val ucUser = UcUser(rep)
-    val ctrlComment = CtrlComment(rep)
-
-    print(ctrlComment.getAllCommentsByReview(1))
-}
 
 
 

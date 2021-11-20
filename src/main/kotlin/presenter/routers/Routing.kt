@@ -111,7 +111,7 @@ fun Application.configureRouting(rep: IRepo) {
         post("/criar-comentario") {
             try {
                 val request = call.receive<String>()
-                call.respondText(controladorComment.create(request))
+                call.respondText(controladorComment.createComment(request))
             } catch (e: Exception){
                 call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }

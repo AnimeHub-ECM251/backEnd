@@ -21,7 +21,7 @@ class CtrlRating(rep: IRepo) {
         var map: HashMap<String, String> = HashMap()
         map = Gson().fromJson(body, map.javaClass)
         val r : Rating = Rating.fromHashMap(map)
-        if (r.rating >= 0 && r.rating <= 5) {
+        if (r.rating in 0..5) {
             return ucRating.insert(r)
         } else {
             throw RATING_OUT_OF_RANGE()
@@ -31,20 +31,18 @@ class CtrlRating(rep: IRepo) {
     fun getUserRating(userId: Int, animeId: Int): String {
         val rating = ucRating.getUserRating(userId, animeId)
         val map : HashMap<String, String>
-        if (rating != -1) {
-            map = hashMapOf<String, String>(
+        map = if (rating != -1) {
+            hashMapOf<String, String>(
                 "rated" to "true",
                 "rating" to rating.toString()
             )
         } else {
-            map = hashMapOf<String, String>(
+            hashMapOf<String, String>(
                 "rated" to "false",
                 "rating" to "-1"
             )
         }
         return Gson().toJson(map)
     }
-
-
 
 }

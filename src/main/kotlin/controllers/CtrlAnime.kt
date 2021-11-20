@@ -75,17 +75,3 @@ class CtrlAnime (rep: IRepo) {
     }
 
 }
-
-fun main(){
-    val repo = RepoMysql()
-    val ctrl = CtrlAnime(repo)
-//    ctrl.createAnime("""{
-//        "title": "KonoSuba2",
-//        "image": "image",
-//        "synopsis": "syn",
-//        "episodes": "30",
-//        "launchDate": 2021-10-10,
-//        "studio": "stud"}""")
-//    ctrl.deleteAnime(13)
-    println(ctrl.getAllAnimesIds())
-}
