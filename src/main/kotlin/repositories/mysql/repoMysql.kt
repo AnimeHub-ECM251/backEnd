@@ -68,7 +68,6 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
 
     }
 
-
     override fun read(table: String, where: String){
         var result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE ${where}")
         DBTablePrinter.printResultSet(result)
@@ -111,12 +110,4 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
         return map
     }
 
-
-
-}
-
-fun main(){
-    val repo = RepoMysql()
-    println(repo.getAll("Anime"))
-    repo.read("Anime")
 }
