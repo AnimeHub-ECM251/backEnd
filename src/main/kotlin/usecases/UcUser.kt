@@ -37,10 +37,7 @@ class UcUser (rep: IRepo) {
 
     fun getUserByLogin(login: String?): User? {
         val id = this.repo.getId("User", "login", login.toString())
-        if (id != -1) {
-            return this.getUserById(id)
-        }
-        return null
+        return if (id != -1) this.getUserById(id) else null
     }
 
     fun login(login: String, password: String): Int {

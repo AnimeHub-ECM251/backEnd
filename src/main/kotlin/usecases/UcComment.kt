@@ -24,8 +24,7 @@ class UcComment (rep: IRepo){
 
     fun get(id: Int): Comment {
         val map = this.repo.getById("Comment", id)
-        val comment = Comment.fromHashMap(map as HashMap<String, String>)
-        return comment
+        return Comment.fromHashMap(map as HashMap<String, String>)
     }
 
     fun getAllCommentsByReview(idAnime: Int?): List<Comment> {

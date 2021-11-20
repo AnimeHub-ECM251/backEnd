@@ -15,12 +15,12 @@ class UcWatch_List(rep: IRepo){
     fun insert(w: Watch_List): String {
         // checks if the user and anime are already in the watch list
         val watchList = repo.getAll("Watch_List","idUser = ${w.idUser} AND idAnime = ${w.idAnime}")
-        if (watchList.isEmpty()) {
+        return if (watchList.isEmpty()) {
             this.repo.create("Watch_List", w.toHashMap())
-            return "Anime was inserted in Watchlist"
+            "Anime was inserted in Watchlist"
         } else {
             this.repo.delete("Watch_List",watchList[0]["id"]!!.toInt())
-            return "Anime was removed in Watchlist"
+            "Anime was removed in Watchlist"
         }
     }
 
@@ -41,15 +41,5 @@ class UcWatch_List(rep: IRepo){
         return list
     }
 
-
-
 }
 
-fun main() {
-    val repo = RepoMysql()
-    val uc = UcWatch_List(repo)
-
-
-
-
-}

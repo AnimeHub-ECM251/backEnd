@@ -1,9 +1,6 @@
 package usecases
 
-import models.Anime
-import models.Comment
 import models.Rating
-import models.Watch_List
 import repositories.IRepo
 import repositories.mysql.RepoMysql
 
@@ -28,8 +25,7 @@ class UcRating(rep: IRepo){
 
     fun get(id: Int): Rating {
         val map = this.repo.getById("Rating", id)
-        val rating = Rating.fromHashMap(map as HashMap<String, String>)
-        return rating
+        return Rating.fromHashMap(map as HashMap<String, String>)
     }
 
     fun insert(r: Rating): String {
@@ -53,18 +49,14 @@ class UcRating(rep: IRepo){
 
     fun getUserRating(userId: Int, animeId: Int): Int {
         val ratingList = repo.getAll("Rating","idUser = $userId AND idAnime = $animeId")
-        if (ratingList.isEmpty()) {
-            return -1
-        } else {
-            return ratingList[0]["rating"]!!.toInt()
-        }
+        return if (ratingList.isEmpty()) -1 else ratingList[0]["rating"]!!.toInt()
     }
 
     fun updatePublicRating(idAnime: Int) {
         // Get new rating
-        val ratingList = this.repo.getAll("Rating", "idAnime = ${idAnime}")
-        var sum : Double = 0.0
-        var count : Double = 0.0
+        val ratingList = this.repo.getAll("Rating", "idAnime = $idAnime")
+        var sum = 0.0
+        var count = 0.0
         for (map in ratingList) {
             sum += map["rating"]!!.toInt()
             count++
@@ -81,9 +73,3 @@ class UcRating(rep: IRepo){
 
 }
 
-fun main() {
-    val repo = RepoMysql()
-    val uc = UcRating(repo)
-    val r = Rating(-1,1,2, 3)
-    println(uc.insert(r))
-}

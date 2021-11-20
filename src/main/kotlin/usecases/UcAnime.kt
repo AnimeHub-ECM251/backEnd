@@ -1,6 +1,5 @@
 package usecases
 
-import com.google.gson.Gson
 import models.Anime
 import repositories.IRepo
 
@@ -25,8 +24,7 @@ class UcAnime (rep: IRepo) {
 
     fun getAnime(id: Int): Anime {
         val map = this.repo.getById("Anime", id)
-        val anime = Anime.fromHashMap(map as HashMap<String, String>)
-        return anime
+        return Anime.fromHashMap(map as HashMap<String, String>)
     }
 
     fun getAllAnimes(): List<Anime> {
