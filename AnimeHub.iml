@@ -35,7 +35,6 @@
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.20" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.5.20" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations:13.0" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.20" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.5.0-native-mt" level="project" />
@@ -91,5 +90,15 @@
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.5" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.26" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
+    <orderEntry type="library" name="Maven: io.ktor:ktor-client-logging:1.6.3" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.5.20" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.ktor:ktor-client-core:1.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.ktor:ktor-http:1.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.ktor:ktor-utils:1.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.ktor:ktor-io:1.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.ktor:ktor-http-cio:1.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlinx:atomicfu:0.16.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlinx:atomicfu-jvm:0.16.1" level="project" />
   </component>
 </module>

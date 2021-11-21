@@ -10,11 +10,12 @@ import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     private val connection: Connection
-    private val SQLStatement: Statement
+    private var SQLStatement: Statement
     private val DBName: String
 
     companion object {
-        val url = "${System.getenv("DATABASE_URL") ?: "localhost"}"
+//        val url = "${System.getenv("DATABASE_URL") ?: "localhost"}"
+        val url = "52.67.251.187"
         val port = 3306
     }
 
@@ -63,8 +64,12 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     }
 
     private fun executeStatement(query: String) {
+        if (this.SQLStatement.isClosed){
+            this.SQLStatement = createStatement()
+        }
         val preparedStatement = this.connection!!.prepareStatement(query)
         preparedStatement!!.executeUpdate()
+        this.SQLStatement.close()
 
     }
 

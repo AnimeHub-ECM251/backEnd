@@ -6,6 +6,7 @@ import io.ktor.http.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import kotlinx.coroutines.time.delay
+import org.slf4j.event.Level
 import presenter.routers.*
 import repositories.IRepo
 import repositories.mysql.RepoMysql
@@ -42,6 +43,8 @@ fun main() {
         install(DefaultHeaders) {
             header(HttpHeaders.AcceptCharset, "utf-8")
         }
+
+
         configureRouting(repo)
     }.start(wait = true)
 }
