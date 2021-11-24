@@ -150,7 +150,7 @@ insert into AnimeHubDB.Anime (title, id, image, synopsis, episodes, launchDate, 
 
 
 -- Criar Usuários
-INSERT INTO AnimeHubDB.User (login, password, email, profilePicture, role, id) VALUES ('user1', 'senha123', 'user1@email.com', 'https://www.drnitinborse.com/wp-content/uploads/2018/02/user-icon-300x300.png', 1, 1);
+INSERT INTO AnimeHubDB.User (login, password, email, profilePicture, role, id) VALUES ('user1', '55a5e9e78207b4df8699d60886fa070079463547b095d1a05bc719bb4e6cd251', 'user1@email.com', 'https://www.drnitinborse.com/wp-content/uploads/2018/02/user-icon-300x300.png', 1, 1);
 
 
 

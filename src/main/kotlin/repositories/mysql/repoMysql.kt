@@ -60,16 +60,15 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     }
 
     private fun createStatement(): Statement {
-        return this.connection!!.createStatement()
+        return this.connection.createStatement()
     }
 
     private fun executeStatement(query: String) {
         if (this.SQLStatement.isClosed){
             this.SQLStatement = createStatement()
         }
-        val preparedStatement = this.connection!!.prepareStatement(query)
+        val preparedStatement = this.connection.prepareStatement(query)
         preparedStatement!!.executeUpdate()
-        this.SQLStatement.close()
 
     }
 
@@ -99,6 +98,7 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
             val idNumber = id.getObject("id") as Int?
             return idNumber?: -1
         }
+        id.close()
         return -1
 
     }
@@ -106,12 +106,14 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     override fun getById(table: String, id: Int): Map<String, String>? {
         val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE id = '${id}'")
         val map = resultSetToList(result)
+        result.close()
         return map[0]
     }
 
     override fun getAll(table: String, where: String): List<Map<String,String>> {
         val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE ${where}")
         val map = resultSetToList(result)
+        result.close()
         return map
     }
 
