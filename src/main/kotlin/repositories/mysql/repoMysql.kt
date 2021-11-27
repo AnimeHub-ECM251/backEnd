@@ -14,8 +14,7 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     private val DBName: String
 
     companion object {
-//        val url = "${System.getenv("DATABASE_URL") ?: "localhost"}"
-        val url = "52.67.251.187"
+        val url = "${System.getenv("DATABASE_URL") ?: "localhost"}"
         val port = 3306
     }
 

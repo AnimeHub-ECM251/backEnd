@@ -28,10 +28,12 @@ fun main() {
             break
         } catch (e : Exception) {
 //            println("Não foi possível se conectar com o DB: ${e.message}")
-            println("Tentando conexão novamente em 5 segundos...")
+            println("Tentando conexão novamente com ${RepoMysql.url}:${RepoMysql.port} em 5 segundos...")
             TimeUnit.SECONDS.sleep(5)
         }
     }
+
+    println("Conexão estabelecida!")
 
 
 

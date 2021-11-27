@@ -26,5 +26,5 @@ services:
      window: 10s
 
   environment:
-   - DATABASE_URL=db
+   - DATABASE_URL=18.231.166.182
   
