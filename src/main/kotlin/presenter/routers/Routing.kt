@@ -182,5 +182,14 @@ fun Application.configureRouting(rep: IRepo) {
                 call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
             }
         }
+
+        get("/get-user/{id}"){
+            try{
+               val userId = Integer.valueOf(call.parameters["id"])
+                call.respondText(controladorUser.getUserById(userId).toString())
+            }catch (e: Exception){
+                call.respondText(defaultExceptions(e), status = HttpStatusCode.BadRequest)
+            }
+        }
     }
 }

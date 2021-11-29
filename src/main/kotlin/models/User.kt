@@ -1,5 +1,6 @@
 package models
 
+import com.google.gson.Gson
 import models.errors.INTANCE_PROPERTIES_DONT_MATCH
 
 data class User(
@@ -42,5 +43,8 @@ data class User(
         }
     }
 
-
+    override fun toString(): String {
+        val map = hashMapOf("login" to this.login, "profilePicture" to this.profilePicture)
+        return Gson().toJson(map);
+    }
 }
