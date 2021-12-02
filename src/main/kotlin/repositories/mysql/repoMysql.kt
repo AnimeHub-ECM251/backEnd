@@ -9,7 +9,7 @@ import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 
 class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
-    private val connection: Connection
+    private var connection: Connection
     private var SQLStatement: Statement
     private val DBName: String
 
@@ -40,6 +40,18 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
         }
     }
 
+    private fun checkConnection(){
+        try {
+            if (connection.isClosed) {
+                connection = createConnection()
+            }
+        }
+        catch (e: SQLException){
+            e.printStackTrace()
+            throw DATABASE_CONNECTION_FAILED()
+        }
+    }
+
     /**
      * Fonte: https://gist.github.com/cworks/4175942
      */
@@ -59,10 +71,12 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     }
 
     private fun createStatement(): Statement {
+        checkConnection()
         return this.connection.createStatement()
     }
 
     private fun executeStatement(query: String) {
+        checkConnection()
         if (this.SQLStatement.isClosed){
             this.SQLStatement = createStatement()
         }
@@ -72,26 +86,31 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     }
 
     override fun read(table: String, where: String){
+        checkConnection()
         var result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE ${where}")
         DBTablePrinter.printResultSet(result)
     }
 
     override fun create(table: String, data: HashMap<String, String>){
+        checkConnection()
         data.remove("id")
         executeStatement("INSERT INTO ${this.DBName}.${table} (${data.keys.joinToString { it -> it }}) values (${data.values.joinToString { it -> "\'${it}\'" }});")
 
     }
 
     override fun update(table: String, data: HashMap<String, String>){
+        checkConnection()
         val id = data.remove("id")
         executeStatement("UPDATE ${this.DBName}.${table} SET ${data.keys.joinToString { it -> "$it = \'${data[it]}\'" }} WHERE id = $id")
     }
 
     override fun delete(table: String, id: Int){
+        checkConnection()
         executeStatement("DELETE FROM ${this.DBName}.${table} WHERE id = $id")
     }
 
     override fun getId(table: String, column: String, value: String): Int {
+        checkConnection()
         val id: ResultSet = this.SQLStatement.executeQuery("SELECT id FROM ${this.DBName}.${table} WHERE ${column} = '${value}'")
         if (id.next()) {
             val idNumber = id.getObject("id") as Int?
@@ -103,6 +122,7 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     }
 
     override fun getById(table: String, id: Int): Map<String, String>? {
+        checkConnection()
         val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE id = '${id}'")
         val map = resultSetToList(result)
         result.close()
@@ -110,6 +130,7 @@ class RepoMysql (dbName: String = "AnimeHubDB") : IRepo{
     }
 
     override fun getAll(table: String, where: String): List<Map<String,String>> {
+        checkConnection()
         val result: ResultSet = this.SQLStatement.executeQuery("SELECT * FROM ${this.DBName}.${table} WHERE ${where}")
         val map = resultSetToList(result)
         result.close()
