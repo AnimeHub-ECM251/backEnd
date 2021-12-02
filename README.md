@@ -1,4 +1,15 @@
 # Back End do Anime Hub
+
+## Desenvolvedores
+
+| Nome | RA | Lab | Cargo |
+| --- | --- | :---: | --- |
+| [Bruno Vilardi Bueno](https://github.com/Brvilardi) | 19.00331-5 | 1 | Back End |
+| [Martin Ropke](https://github.com/MartinRopke) | 19.01592-5 | 1 | Back End |
+| [Gabriel Marques Rangel da Silva](https://github.com/Rangel07) | 19.01288-8 | 1 | Front End |
+| [Arthur Torres Barros](https://github.com/CyberGoat9152) | 17.01913-3 | 3 | Front End |
+
+
 ## Overview do Projeto
 Repositório do Back End do projeto Anime Hub.
 
